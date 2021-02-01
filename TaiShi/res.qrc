@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>themes/Aqua.qss</file>
+    </qresource>
+</RCC>
