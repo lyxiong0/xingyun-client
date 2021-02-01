@@ -12,15 +12,15 @@
 
 1. 使用MySQL Workbench，登录
 
-   <img src="/home/xiong/qt_project/xingyun-client/images/login.png" style="zoom: 50%;" />
+   ![](https://github.com/lyxiong0/xingyun-client/blob/main/images/login.png)
 
 2. 选择Data Import/Restore
 
-   <img src="/home/xiong/qt_project/xingyun-client/images/import.png" style="zoom:50%;" />
+   ![](https://github.com/lyxiong0/xingyun-client/blob/main/images/import.png)
 
 3. 选择Import from Self --> Start Import
 
-   <img src="/home/xiong/qt_project/xingyun-client/images/2021-02-01 15-10-01屏幕截图.png" style="zoom:50%;" />
+   ![](https://github.com/lyxiong0/xingyun-client/blob/main/images/import2.png)
 
 ## Windows编译报错
 
