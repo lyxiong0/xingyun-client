@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>态势平台桌面客户端</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -131,6 +131,13 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="3" column="4">
+        <widget class="QPushButton" name="btnOutExcel">
+         <property name="text">
+          <string>导出到Excel</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

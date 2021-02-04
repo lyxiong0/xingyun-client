@@ -13,7 +13,6 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    connection.h \
     mainwindow.h
 
 FORMS += \
