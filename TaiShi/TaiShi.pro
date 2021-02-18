@@ -9,14 +9,20 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addshuiyin.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qushuiyin.cpp
 
 HEADERS += \
-    mainwindow.h
+    addshuiyin.h \
+    mainwindow.h \
+    qushuiyin.h
 
 FORMS += \
-    mainwindow.ui
+    addshuiyin.ui \
+    mainwindow.ui \
+    qushuiyin.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -25,3 +31,17 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+DISTFILES += \
+    watermark/README.md \
+    watermark/__pycache__/reedsolomon.cpython-37.pyc \
+    watermark/__pycache__/wm_kmeans.cpython-36.pyc \
+    watermark/__pycache__/wm_kmeans.cpython-37.pyc \
+    watermark/data/covtype_10000.csv \
+    watermark/data/data_wm_1000_em_wm.csv \
+    watermark/demo_1.py \
+    watermark/reedsolomon.py \
+    watermark/wm_emb.py \
+    watermark/wm_ext.py \
+    watermark/wm_judge.py \
+    watermark/wm_kmeans.py

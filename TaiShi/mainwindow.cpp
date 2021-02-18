@@ -12,12 +12,33 @@
 #include <QDateTime>
 #include <QAbstractItemModel>
 #include <QList>
+#include <addshuiyin.h>
+#include <qushuiyin.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //点击添加水印按钮,,弹出模态对话框
+    connect(ui->actionadd,&QAction::triggered,[=](){
+        //创建模态对话框
+        addshuiyin dlg(this);
+        dlg.resize(500,500);
+        dlg.exec();
+    });
+
+    //点击取水印按钮,,弹出模态对话框
+    connect(ui->actionqu,&QAction::triggered,[=](){
+        //创建模态对话框
+        qushuiyin dlg1(this);
+        dlg1.resize(500,500);
+        dlg1.exec();
+    });
+
+
+
 }
 
 MainWindow::~MainWindow()
