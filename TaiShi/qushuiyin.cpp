@@ -13,16 +13,17 @@ qushuiyin::qushuiyin(QWidget *parent) :
     connect(ui->pushButton,&QPushButton::clicked,[=](){
         QString datapath=ui->lineEdit->text();
         QString wm=ui->lineEdit_2->text();
+        QString pf=ui->lineEdit_3->text();
         if(datapath.length()==0||wm.length()==0){
             QMessageBox::critical(this,"datapath error","请填入数据地址或水印长度");
         }else{
-            std::string str2="cmd /c d:&&cd ";
-            str2=str2+datapath.toUtf8().data()+"&&python wm_ext.py "+wm.toUtf8().data();
+            std::string str2="";
+            str2=str2+pf.toUtf8().data()+":&&cd "+datapath.toUtf8().data()+"&&python wm_ext.py "+wm.toUtf8().data();
             qDebug() << QString(str2.c_str());
-            int status=WinExec(str2.c_str(), SW_HIDE);
-//          int status=std::system("d:&&cd D:\\ideaspace\\xingyun-backend\\eladmin-system\\watermark&&python wm_emb.py jinlei");
+//          int status=WinExec(str2.c_str(), SW_SHOWNORMAL);
+            int status=std::system(str2.c_str());
             qDebug()<<status;
-            if(status<31){
+            if(status!=0){
                 QMessageBox::critical(this,"length error","请输入正确的水印长度");
             }else{
                 QMessageBox::information(this,"提示","成功取出水印");
