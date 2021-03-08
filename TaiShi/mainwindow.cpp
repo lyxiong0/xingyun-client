@@ -12,12 +12,33 @@
 #include <QDateTime>
 #include <QAbstractItemModel>
 #include <QList>
+#include <addshuiyin.h>
+#include <qushuiyin.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //点击添加水印按钮,,弹出模态对话框
+    connect(ui->actionadd,&QAction::triggered,[=](){
+        //创建模态对话框
+        addshuiyin dlg(this);
+        dlg.resize(500,500);
+        dlg.exec();
+    });
+
+    //点击取水印按钮,,弹出模态对话框
+    connect(ui->actionqu,&QAction::triggered,[=](){
+        //创建模态对话框
+        qushuiyin dlg1(this);
+        dlg1.resize(500,500);
+        dlg1.exec();
+    });
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -31,8 +52,10 @@ void MainWindow::on_btnConnect_clicked()
     QString user = ui->editUser->text();
     QString password = ui->editPassword->text();
     QString database = ui->editDatabase->text();
+    QString hostName = ui->editHostName->text();
+    int port = ui->editPort->text().toInt();
 
-    MainWindow::createConnection(user, password, database);
+    MainWindow::createConnection(user, password, database, hostName, port);
 }
 
 void MainWindow::on_btnShow_clicked()
@@ -73,7 +96,10 @@ void MainWindow::on_btnOutExcel_clicked()
     dlg.setAcceptMode(QFileDialog::AcceptSave);
     dlg.setDirectory(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));
     dlg.setNameFilter("*.xlsb");
-    filename = QDateTime::currentDateTime().toString("yyyyMMdd hh-mm-ss") + ".xlsb";
+    // filename = QDateTime::currentDateTime().toString("yyyyMMdd hh-mm-ss") + ".xlsb";
+    QString table = ui->editTable->text();
+    QString database = ui->editDatabase->text();
+    filename = database + "-" + table + ".xlsb";
     dlg.selectFile(filename);
     if (dlg.exec() != QDialog::Accepted)
         return;
