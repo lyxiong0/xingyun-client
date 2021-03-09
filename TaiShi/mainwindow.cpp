@@ -14,6 +14,7 @@
 #include <QList>
 #include <addshuiyin.h>
 #include <qushuiyin.h>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -79,14 +80,24 @@ void MainWindow::on_btnShow_clicked()
 void MainWindow::on_btnAnalyze_clicked()
 {
     QString table = ui->editTable->text();
-    QString comment = QString("show full columns from %1").arg(table);
+    //QString comment = QString("show full columns from %1").arg(table);
+    QString comment = QString("select "
+        "COLUMN_NAME, DATA_TYPE, CHARACTER_OCTET_LENGTH, COLUMN_COMMENT, COLUMN_DEFAULT, IS_NULLABLE from "
+        "(select * from INFORMATION_SCHEMA.COLUMNS where table_name='%1') dt;").arg(table);
+    qDebug() << comment;
     QSqlQueryModel *queryModel = new QSqlQueryModel;
 
     queryModel->setQuery(comment);
     ui->tableView->setModel(queryModel);
-//    QSqlTableModel *tableModel = new QSqlTableModel;
-//    tableModel->setQuery(comment);
-//    ui->tableView->setModel(tableModel);
+    //QSqlDatabase dbexcel = QSqlDatabase::addDatabase("QODBC","excelexport");
+//    QSqlQuery query(dbexcel);
+//    QString sql;
+
+//    // drop the table if it's already exists
+//    sql = QString("DROP TABLE [%1]").arg(sheetName);
+//    query.exec( sql);
+//    //create the table (sheet in Excel file)
+//    sql = QString("CREATE TABLE [%1] (").arg(sheetName);
 }
 
 void MainWindow::on_btnOutExcel_clicked()
