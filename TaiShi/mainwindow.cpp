@@ -50,18 +50,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnConnect_clicked()
 {
-    QString user = ui->editUser->text();
-    QString password = ui->editPassword->text();
-    QString database = ui->editDatabase->text();
-    QString hostName = ui->editHostName->text();
-    int port = ui->editPort->text().toInt();
+    //点击“连接”按钮，从输入框获取信息
+    QString user = ui->editUser->text(); //用户名
+    QString password = ui->editPassword->text(); //密码
+    QString database = ui->editDatabase->text(); //数据库名
+    QString hostName = ui->editHostName->text(); //主机名
+    int port = ui->editPort->text().toInt(); //端口
 
+    //连接数据库
     MainWindow::createConnection(user, password, database, hostName, port);
 }
 
 void MainWindow::on_btnShow_clicked()
 {
-    QString table = ui->editTable->text();
+    //“显示选中表”按钮
+    QString table = ui->editTable->text(); //表名
+    //判断用户是否有输入表名
     if (table.length()) {
         model = new QSqlTableModel(this);
         model->setTable(table);
@@ -79,29 +83,24 @@ void MainWindow::on_btnShow_clicked()
 
 void MainWindow::on_btnAnalyze_clicked()
 {
-    QString table = ui->editTable->text();
+    //“生成统计信息”按钮
+    QString table = ui->editTable->text(); //表名
     //QString comment = QString("show full columns from %1").arg(table);
+    //执行SQL语句
     QString comment = QString("select "
-        "COLUMN_NAME, DATA_TYPE, CHARACTER_OCTET_LENGTH, COLUMN_COMMENT, COLUMN_DEFAULT, IS_NULLABLE from "
+        "COLUMN_NAME as columnName, DATA_TYPE as columnType, CHARACTER_OCTET_LENGTH as columnLength,"
+        "COLUMN_COMMENT as remarks, COLUMN_DEFAULT as defaultValue, IS_NULLABLE as nullable from "
         "(select * from INFORMATION_SCHEMA.COLUMNS where table_name='%1') dt;").arg(table);
     qDebug() << comment;
     QSqlQueryModel *queryModel = new QSqlQueryModel;
 
     queryModel->setQuery(comment);
     ui->tableView->setModel(queryModel);
-    //QSqlDatabase dbexcel = QSqlDatabase::addDatabase("QODBC","excelexport");
-//    QSqlQuery query(dbexcel);
-//    QString sql;
-
-//    // drop the table if it's already exists
-//    sql = QString("DROP TABLE [%1]").arg(sheetName);
-//    query.exec( sql);
-//    //create the table (sheet in Excel file)
-//    sql = QString("CREATE TABLE [%1] (").arg(sheetName);
 }
 
 void MainWindow::on_btnOutExcel_clicked()
 {
+    //导出到Excel按钮
     QFileDialog dlg;
     QString filename;
     dlg.setAcceptMode(QFileDialog::AcceptSave);
@@ -110,7 +109,8 @@ void MainWindow::on_btnOutExcel_clicked()
     // filename = QDateTime::currentDateTime().toString("yyyyMMdd hh-mm-ss") + ".xlsb";
     QString table = ui->editTable->text();
     QString database = ui->editDatabase->text();
-    filename = database + "-" + table + ".xlsb";
+    //文件名格式：数据库名-表名.xls
+    filename = database + "-" + table + ".xls";
     dlg.selectFile(filename);
     if (dlg.exec() != QDialog::Accepted)
         return;
@@ -243,6 +243,7 @@ bool MainWindow::insert(QSqlQuery &query, QString sheetName, QStringList slist)
 
 bool MainWindow::createConnection(QString user, QString password, QString database,
                                   QString hostName, int port) {
+    //创建数据库连接，hostName默认localhost，port默认3306
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(hostName);
     db.setPort(port);
