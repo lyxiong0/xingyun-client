@@ -4,7 +4,7 @@
 
 class CLoadQSS
 {
-    public:
+public:
     static void setStyle(const QString &style)
     {
         QFile qss(style);

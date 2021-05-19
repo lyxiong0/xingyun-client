@@ -20,11 +20,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    static bool saveFromTable(QString filePath, QTableView *tableView, QString comment="");
-    static bool save(QString filePath,QStringList headers,QList<QStringList> data,QString comment="");
-    static bool insert(QSqlQuery& query, QString sheetName, QStringList slist);
     static bool createConnection(QString user, QString password, QString database,
                                  QString hostName="localhost", int port=3306);
+    static void Table2ExcelByHtml(QTableView *table,QString title, QString fileName);
 
 private slots:
     void on_btnConnect_clicked();
