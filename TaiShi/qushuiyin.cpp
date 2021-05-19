@@ -20,16 +20,22 @@ qushuiyin::qushuiyin(QWidget *parent) :
             std::string str2="";
             str2=str2+pf.toUtf8().data()+":&&cd "+datapath.toUtf8().data()+"&&D:\\Python36\\python wm_ext.py "+wm.toUtf8().data();
             qDebug() << QString(str2.c_str());
-//          int status=WinExec(str2.c_str(), SW_SHOWNORMAL);
-            int status=std::system(str2.c_str());
-            qDebug()<<status;
-            if(status!=0){
+            //获取命令行输出
+            FILE *fp;
+            char tmp[1024] = {0};
+            std::string result;
+            if ((fp = popen(str2.c_str(), "r")) != nullptr) {
+                while (fgets(tmp, 1024, fp) != nullptr)
+                    result += tmp;
+                pclose(fp);
+            }
+            QString success = QString::fromStdString("成功提取水印：" + result);
+            //判断
+            if(result.size() == 0){
                 QMessageBox::critical(this,"length error","请输入正确的水印长度");
             }else{
-                QMessageBox::information(this,"提示","成功取出水印");
+                QMessageBox::information(this,"提示", success);
             }
-
-
         }
     });
 }
